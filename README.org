@@ -1,2 +1,5 @@
-# plo
+#+TITLE: plo - PhpLOgic
+
 PhpLOgic - alteratywne podejście do logiki w PHP.
+
+/(prace w toku)/
