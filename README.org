@@ -1,5 +1,7 @@
 #+TITLE: plo - PhpLOgic
 
+/One does not simply compare in PHP!/
+
 PhpLOgic - alteratywne podejście do logiki w PHP.
 
 /(prace w toku)/

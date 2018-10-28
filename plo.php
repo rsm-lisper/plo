@@ -2,18 +2,24 @@
 
 namespace plo;
 
-function equalp ($a, $b) {
-    return $a == $b;
-}
+function ror (... $args) { return
+              empty ($args) ? false :
+              ($args[0] ? $args[0] :
+               ror (... array_shift ($args)) ;}
 
-function sequalp ($a, $b) {
-    return $a === $b;
-}
+function rand (... $args) { return
+              empty ($args) ? true :
+              ($args[0] ? rand (... array_shift ($args)) :
+               $args[0]) ;}
 
-function nullp ($a) {
-    return equalp ($a, null);
-}
+function equalp ($a, $b) { return
+        $a == $b ;}
 
-function snullp ($a) {
-    return sequal ($a, null);
-}
+function sequalp ($a, $b) { return
+        $a === $b ;}
+
+function nullp ($a) { return
+        equalp ($a, null) ;}
+
+function snullp ($a) { return
+        sequal ($a, null) ;}
