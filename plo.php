@@ -4,12 +4,10 @@ namespace plo ;
 
 require 'lib/pva/pva.php' ;
 
-function array_cut_first ($array) {
-    array_shift ($array) ;
-    return $array ;}
+use function pva\every, pva\some ;
 
 
-function simple_sfalsep ($arg) { return
+function single_sfalsep ($arg) { return
         $arg === false ;}
 
 
@@ -23,10 +21,8 @@ function simple_sfalsep ($arg) { return
  * @return bool
  */
 function sfalsep (...$args) { return
-        (count ($args) === 0 ? null :
-         (count ($args) === 1 ? simple_sfalsep ($args[0]) :
-          (simple_sfalsep ($args[0]) ? sfalsep (...array_cut_first ($args)) :
-           false)) ;}
+        every (single_sfalsep,
+               $args) ;}
 
 
 /**
@@ -41,8 +37,8 @@ function struep (...$args) { return
         ! sfalsep (...$args) ;}
 
 
-function simple_falsep ($arg) { return
-        simple_sfalsep ($arg) ||
+function single_falsep ($arg) { return
+        single_sfalsep ($arg) ||
         $arg === [] ||
         $arg === 0.0 ||
         $arg === 0 ||
@@ -57,10 +53,8 @@ function simple_falsep ($arg) { return
  * @return bool
  */
 function falsep (...$args) { return
-        (count ($args) === 0 ? null :
-         (count ($args) === 1 ? simple_falsep ($args[0]) :
-          (simple_falsep ($args[0]) ? falsep (...array_cut_first ($args)) :
-           false)) ;}
+        every (single_falsep,
+               $args) ;}
 
 
 /**
@@ -73,33 +67,54 @@ function truep (...$args) { return
         ! falsep (...$args) ;}
 
 
+function single_snullp ($arg) { return
+        $arg === null ;}
+
+
+function snullp (...$args) { return
+        every (single_snullp,
+               $args) ;}
+
+
+function single_nullp ($arg) { return
+        single_falsep ($arg) ;}
+
+
+function nullp (...$args) { return
+        falsep (...$args) ;}
+
+
+function sorp (...$args) { return
+        some (single_struep,
+              $args) ;}
+
+
 function orp (...$args) { return
-        (count ($args) === 0 ? false :
-         ($args[0] ? $args[0] :
-          orp (...array_shift ($args)))) ;}
+        some (single_truep,
+              $args) ;}
+
+
+function sandp (...$args) { return
+        struep (...$args) ;}
 
 
 function andp (...$args) { return
-        (empty ($args) ? true :
-         ($args[0] ? andp (...array_shift ($args)) :
-          $args[0])) ;}
+        truep (...$args) ;}
 
 
-function equalp ($a, $b) {
-    return $a == $b;
-}
+function sxorp (...$args) { return
+        sandp (sorp (...$args),
+               ! sandp (...$args)) ;}
 
 
-function sequalp ($a, $b) {
-    return $a === $b;
-}
+function xorp (...$args) { return
+        andp (orp (...$args),
+              ! andp (...$args)) ;}
 
 
-function nullp ($a) {
-    return equalp($a, null);
-}
+function single_sequalp ($a, $b) { return
+        $a === $b ;}
 
 
-function snullp ($a) {
-    return sequal($a, null);
-}
+function single_equalp ($a, $b) { return
+        $a == $b ;}
