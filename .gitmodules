@@ -1,0 +1,6 @@
+[submodule "lib/pva"]
+	path = lib/pva
+	url = https://github.com/rsm-lisper/pva
+[submodule "lib/ppt"]
+	path = lib/ppt
+	url = https://github.com/rsm-lisper/ppt
