@@ -8,6 +8,11 @@ use function pva\every, pva\some ;
 
 
 /**
+ * Single Strict False Predicate.
+ *
+ * Sprawdza (ściśle) czy $arg jest false. W wersji ścisłej wartość false ma wyłącznie bool false.
+ * Funkcja pomocnicza dla sfalse.
+ *
  * @param mixed $arg
  * @return bool
  */
@@ -16,11 +21,12 @@ function single_sfalsep ($arg) { return
 
 
 /**
- * Sprawdza ściśle (strict) czy każdy argument jest fałszem (false).
+ * Strict False Predicate.
  *
- * W wersji ścisłej wartość logiczną fałsz (false) ma wyłącznie bool false.
+ * Sprawdza (ściśle) czy każdy z argumentów $args jest false. W wersji ścisłej wartość
+ * false ma wyłącznie bool false.
  *
- * @param mixed $args Argumenty do sprawdzenia.
+ * @param mixed $args
  * @return bool
  */
 function sfalsep (...$args) { return
@@ -29,11 +35,12 @@ function sfalsep (...$args) { return
 
 
 /**
- * Sprawdza ściśle (strict) czy każdy argument jest prawdą (true).
+ * Strict True Predicate.
  *
- * W wersji ścisłej wartość logiczną prawda (true) ma wszystko poza bool false.
+ * Sprawdza (ściśle) czy każdy z argumentów $args jest true. W wersji ścisłej wartość  true ma
+ * wszystko poza bool false.
  *
- * @param mixed $args Argumenty do sprawdzenia.
+ * @param mixed $args
  * @return bool
  */
 function struep (...$args) { return
@@ -41,22 +48,41 @@ function struep (...$args) { return
 
 
 /**
+ * Single False Predicate.
+ *
+ * Sprawdza czy $arg jest false. W wersji zwykłej, wartość false mają:
+ * - null
+ * - bool false
+ * - int 0
+ * - float 0.0
+ * - string ''
+ * - array []
+ * Funkcja pomocnicza dla falsep.
+ *
  * @param mixed $arg
  * @return bool
  */
 function single_falsep ($arg) { return
         single_sfalsep ($arg) ||
-        $arg === [] ||
-        $arg === 0.0 ||
+        $arg === null ||
         $arg === 0 ||
-        $arg === "" ||
-        $arg === null ;}
+        $arg === 0.0 ||
+        $arg === '' ||
+        $arg === [] || ;}
 
 
 /**
- * Sprawdza czy każdy argument jest fałszem (false).
+ * False Predicate.
  *
- * @param mixed $args Argumenty do sprawdzenia.
+ * Sprawdza czy każdy z argumentów $args jest false. W wersji zwykłej, wartość false mają:
+ * - null
+ * - bool false
+ * - int 0
+ * - float 0.0
+ * - string ''
+ * - array []
+ *
+ * @param mixed $args
  * @return bool
  */
 function falsep (...$args) { return
@@ -65,9 +91,12 @@ function falsep (...$args) { return
 
 
 /**
- * Sprawdza czy każdy argument jest prawdą (true).
+ * True Predicate.
  *
- * @param mixed $args Argumenty do sprawdzenia.
+ * Sprawdza czy każdy z argumentów jest true. W wersji zwykłej wartość true ma wszystko co nie
+ * jest falsep.
+ *
+ * @param mixed $args
  * @return bool
  */
 function truep (...$args) { return
@@ -75,6 +104,11 @@ function truep (...$args) { return
 
 
 /**
+ * Single Strict Null Predicate.
+ *
+ * Sprawdza (ściśle) czy $arg jest null. W wersji ścisłej tylko i wyłącznie null jest null.
+ * Funkcja pomocnicza dla snullp.
+ *
  * @param mixed $arg
  * @return bool
  */
@@ -83,7 +117,12 @@ function single_snullp ($arg) { return
 
 
 /**
- * @param mixed ...$args
+ * Strict Null Predicate.
+ *
+ * Sprawdza cza każdy z argumentów $args jest null. W wersji ścisłej tylko i wyłącznie null
+ * jest null.
+ *
+ * @param mixed $args
  * @return bool
  */
 function snullp (...$args) { return
@@ -92,6 +131,17 @@ function snullp (...$args) { return
 
 
 /**
+ * Single Null Predicate.
+ *
+ * Sprawdza czy $arg jest null. W wersji zwykłej null są:
+ * - null
+ * - bool false
+ * - int 0
+ * - float 0.0
+ * - string ''
+ * - array []
+ * czyli wszystko to co jest też falsep. Funkcja pomocnicza dla nullp.
+ *
  * @param mixed $arg
  * @return bool
  */
@@ -100,7 +150,18 @@ function single_nullp ($arg) { return
 
 
 /**
- * @param mixed ...$args
+ * Null Predicate.
+ *
+ * Sprawdza czy każdy z argumentów $args jest null. W wersji zwykłej null są:
+ * - null
+ * - bool false
+ * - int 0
+ * - float 0.0
+ * - string ''
+ * - array []
+ * czyli wszystko to co jest też falsep.
+ *
+ * @param mixed $args
  * @return bool
  */
 function nullp (...$args) { return
@@ -108,7 +169,7 @@ function nullp (...$args) { return
 
 
 /**
- * @param mixed ...$args
+ * @param mixed $args
  * @return bool
  */
 function sorp (...$args) { return
@@ -117,7 +178,7 @@ function sorp (...$args) { return
 
 
 /**
- * @param mixed ...$args
+ * @param mixed $args
  * @return bool
  */
 function orp (...$args) { return
@@ -126,7 +187,7 @@ function orp (...$args) { return
 
 
 /**
- * @param mixed ...$args
+ * @param mixed $args
  * @return bool
  */
 function sandp (...$args) { return
@@ -134,7 +195,7 @@ function sandp (...$args) { return
 
 
 /**
- * @param mixed ...$args
+ * @param mixed $args
  * @return bool
  */
 function andp (...$args) { return
@@ -142,7 +203,7 @@ function andp (...$args) { return
 
 
 /**
- * @param mixed ...$args
+ * @param mixed $args
  * @return bool
  */
 function sxorp (...$args) { return
@@ -151,7 +212,7 @@ function sxorp (...$args) { return
 
 
 /**
- * @param mixed ...$args
+ * @param mixed $args
  * @return bool
  */
 function xorp (...$args) { return
@@ -170,7 +231,7 @@ function single_sequalp ($a, $b) { return
 
 /**
  * @param mixed $arg0
- * @param mixed ...$args
+ * @param mixed $args
  * @return bool
  */
 function sequalp ($arg0, ...$args) {
@@ -190,7 +251,7 @@ function single_equalp ($a, $b) { return
 
 /**
  * @param mixed $arg0
- * @param mixed ...$args
+ * @param mixed $args
  * @return bool
  */
 function equalp ($arg0, ...$args) {
