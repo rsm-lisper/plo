@@ -298,7 +298,8 @@ function equalp (...$args) { return
  * @return bool
  */
 function single_slessp ($a, $b) { return
-        sandp (gettype ($a) === gettype ($b),
+        sandp (single_sequalp (gettype ($a),
+                               gettype ($b)),
                $a < $b) ;}
 
 
@@ -321,8 +322,9 @@ function slessp (...$args) { return
  * @return bool
  */
 function single_sgreaterp ($a, $b) { return
-        andp (gettype ($a) === gettype ($b),
-              $a > $b) ;}
+        sandp (single_sequalp (gettype ($a),
+                               gettype ($b)),
+               $a > $b) ;}
 
 
 /**
