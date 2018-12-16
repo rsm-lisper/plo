@@ -31,7 +31,7 @@ function single_sfalsep ($arg) { return
  */
 function sfalsep (...$args) { return
         every (single_sfalsep,
-               $args) ;}
+               ...$args) ;}
 
 
 /**
@@ -87,7 +87,7 @@ function single_falsep ($arg) { return
  */
 function falsep (...$args) { return
         every (single_falsep,
-               $args) ;}
+               ...$args) ;}
 
 
 /**
@@ -127,7 +127,7 @@ function single_snullp ($arg) { return
  */
 function snullp (...$args) { return
         every (single_snullp,
-               $args) ;}
+               ...$args) ;}
 
 
 /**
@@ -169,6 +169,8 @@ function nullp (...$args) { return
 
 
 /**
+ * Logical Strict OR Predicate.
+ *
  * @param mixed $args
  * @return bool
  */
@@ -178,6 +180,8 @@ function sorp (...$args) { return
 
 
 /**
+ * Logical OR Predicate.
+ *
  * @param mixed $args
  * @return bool
  */
@@ -187,6 +191,8 @@ function orp (...$args) { return
 
 
 /**
+ * Logical Strict AND Predicate.
+ *
  * @param mixed $args
  * @return bool
  */
@@ -195,6 +201,8 @@ function sandp (...$args) { return
 
 
 /**
+ * Logical AND Predicate.
+ *
  * @param mixed $args
  * @return bool
  */
@@ -203,6 +211,8 @@ function andp (...$args) { return
 
 
 /**
+ * Logical Strict XOR Predicate.
+ *
  * @param mixed $args
  * @return bool
  */
@@ -212,6 +222,8 @@ function sxorp (...$args) { return
 
 
 /**
+ * Logical XOR Predicate.
+ *
  * @param mixed $args
  * @return bool
  */
@@ -221,6 +233,8 @@ function xorp (...$args) { return
 
 
 /**
+ * Single Strict Equal-To Predicate.
+ *
  * @param mixed $a
  * @param mixed $b
  * @return bool
@@ -230,17 +244,33 @@ function single_sequalp ($a, $b) { return
 
 
 /**
- * @param mixed $arg0
+ * Test Every.
+ *
+ * @param callable $single_testp
  * @param mixed $args
  * @return bool
  */
-function sequalp ($arg0, ...$args) {
-    $testp = function ($a) use ($arg0) { return
-           single_sequalp ($arg0, $a) ;};
-    return every ($testp, $args) ;}
+function test_every ($single_testp, ...$args) {
+    $last_arg = array_shift ($args) ;
+    $testp = function ($a) use ($single_testp, $last_arg) { return
+           $single_testp ($last_arg, $last_arg = $a) ;};
+    return every ($testp, ...$args) ;}
 
 
 /**
+ * Strict Equal-To Predicate.
+ *
+ * @param mixed $args
+ * @return bool
+ */
+function sequalp (...$args) { return
+        test_every (single_sequalp,
+                    ...$args) ;}
+
+
+/**
+ * Single Equal-To Predicate.
+ *
  * @param mixed $a
  * @param mixed $b
  * @return bool
@@ -250,11 +280,57 @@ function single_equalp ($a, $b) { return
 
 
 /**
- * @param mixed $arg0
+ * Equal-To Predicate.
+ *
  * @param mixed $args
  * @return bool
  */
-function equalp ($arg0, ...$args) {
-    $testp = function ($a) use ($arg0) { return
-           single_equalp ($arg0, $a) ;};
-    return every ($testp, $args) ;}
+function equalp (...$args) { return
+        test_every (single_equalp,
+                    ...$args) ;}
+
+
+/**
+ * Single Strict Less-Than Predicate.
+ *
+ * @param mixed $a
+ * @param mixed $b
+ * @return bool
+ */
+function single_slessp ($a, $b) { return
+        sandp (gettype ($a) === gettype ($b),
+               $a < $b) ;}
+
+
+/**
+ * Strict Less-Than Predicate.
+ *
+ * @param mixed $args
+ * @return bool
+ */
+function slessp (...$args) { return
+        test_every (single_slessp,
+                    ...$args) ;}
+
+
+/**
+ * Single Strict Greaten-Than Predicate.
+ *
+ * @param mixed $a
+ * @param mixed $b
+ * @return bool
+ */
+function single_sgreaterp ($a, $b) { return
+        andp (gettype ($a) === gettype ($b),
+              $a > $b) ;}
+
+
+/**
+ * Strict Greater-Than Predicate.
+ *
+ * @param mixed $args
+ * @param bool
+ */
+function sgreaterp (...$args) { return
+        test_every (single_sgreaterp,
+                    ...$args) ;}
