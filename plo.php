@@ -20,8 +20,8 @@ use function pva\every, pva\some ;
  * @return bool
  */
 function sfalsep (...$args) { return
-                  every (base_sfalsep,
-                         ...$args) ;}
+        every (base_sfalsep,
+               ...$args) ;}
 
 
 /**
@@ -34,7 +34,7 @@ function sfalsep (...$args) { return
  * @return bool
  */
 function struep (...$args) { return
-                  ! sfalsep (...$args) ;}
+        ! sfalsep (...$args) ;}
 
 
 /**
@@ -52,8 +52,8 @@ function struep (...$args) { return
  * @return bool
  */
 function falsep (...$args) { return
-                  every (base_falsep,
-                         ...$args) ;}
+        every (base_falsep,
+               ...$args) ;}
 
 
 /**
@@ -66,7 +66,7 @@ function falsep (...$args) { return
  * @return bool
  */
 function truep (...$args) { return
-                  ! falsep (...$args) ;}
+        ! falsep (...$args) ;}
 
 
 /**
@@ -79,8 +79,8 @@ function truep (...$args) { return
  * @return bool
  */
 function snullp (...$args) { return
-                  every (base_snullp,
-                         ...$args) ;}
+        every (base_snullp,
+               ...$args) ;}
 
 
 /**
@@ -99,7 +99,7 @@ function snullp (...$args) { return
  * @return bool
  */
 function nullp (...$args) { return
-                  falsep (...$args) ;}
+        falsep (...$args) ;}
 
 
 /**
@@ -109,8 +109,8 @@ function nullp (...$args) { return
  * @return bool
  */
 function sorp (...$args) { return
-                  some (base_struep,
-                        $args) ;}
+        some (base_struep,
+              $args) ;}
 
 
 /**
@@ -120,8 +120,8 @@ function sorp (...$args) { return
  * @return bool
  */
 function orp (...$args) { return
-                  some (base_truep,
-                        $args) ;}
+        some (base_truep,
+              $args) ;}
 
 
 /**
@@ -131,7 +131,7 @@ function orp (...$args) { return
  * @return bool
  */
 function sandp (...$args) { return
-                  struep (...$args) ;}
+        struep (...$args) ;}
 
 
 /**
@@ -141,7 +141,7 @@ function sandp (...$args) { return
  * @return bool
  */
 function andp (...$args) { return
-                  truep (...$args) ;}
+        truep (...$args) ;}
 
 
 /**
@@ -151,8 +151,8 @@ function andp (...$args) { return
  * @return bool
  */
 function sxorp (...$args) { return
-                  sandp (sorp (...$args),
-                         ! sandp (...$args)) ;}
+        sandp (sorp (...$args),
+               ! sandp (...$args)) ;}
 
 
 /**
@@ -162,8 +162,8 @@ function sxorp (...$args) { return
  * @return bool
  */
 function xorp (...$args) { return
-                  andp (orp (...$args),
-                        ! andp (...$args)) ;}
+        andp (orp (...$args),
+              ! andp (...$args)) ;}
 
 
 /**
@@ -173,8 +173,18 @@ function xorp (...$args) { return
  * @return bool
  */
 function sequalp (...$args) { return
-                  test_every (base_sequalp,
-                              ...$args) ;}
+        test_every (base_sequalp,
+                    ...$args) ;}
+
+
+/**
+ * Strict Equal-To Predicate Alias.
+ *
+ * @param mixed $args
+ * @return bool
+ */
+function eq (...$args) { return
+        sequalp (...$args) ;}
 
 
 /**
@@ -184,8 +194,8 @@ function sequalp (...$args) { return
  * @return bool
  */
 function equalp (...$args) { return
-                  test_every (base_equalp,
-                              ...$args) ;}
+        test_every (base_equalp,
+                    ...$args) ;}
 
 
 /**
@@ -195,8 +205,8 @@ function equalp (...$args) { return
  * @return bool
  */
 function slessp (...$args) { return
-                  test_every (base_slessp,
-                              ...$args) ;}
+        test_every (base_slessp,
+                    ...$args) ;}
 
 
 /**
@@ -206,5 +216,5 @@ function slessp (...$args) { return
  * @param bool
  */
 function sgreaterp (...$args) { return
-                  test_every (base_sgreaterp,
-                              ...$args) ;}
+        test_every (base_sgreaterp,
+                    ...$args) ;}
