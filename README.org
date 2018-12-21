@@ -1,7 +1,21 @@
 #+TITLE: plo - PhpLOgic
+#+AUTHOR: Rafał -rsm- Marek
 
 /One does not simply compare in PHP!/
 
 PhpLOgic - alteratywne podejście do logiki w PHP.
 
-/(prace w toku)/
+* Instalacja
+- gdzieś w drzewie projektu sklonować repozytorium:
+#+BEGIN_EXAMPLE shell
+git clone http://github.com/rsm-lisper/plo
+#+END_EXAMPLE
+- przejść do katalogu =plo= i pobrać zależności:
+#+BEGIN_EXAMPLE shell
+cd plo
+git submodules sync && git submodules update
+#+END_EXAMPLE
+- uruchomić testy:
+#+BEGIN_EXAMPLE shell
+./test.sh
+#+END_EXAMPLE

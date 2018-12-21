@@ -2,22 +2,12 @@
 
 namespace plo ;
 
-require 'lib/pva/pva.php' ;
+require_once __DIR__. 'base.php' ;
+require_once __DIR__. 'utils.php' ;
+
+require_once __DIR__. 'lib/pva/pva.php' ;
 
 use function pva\every, pva\some ;
-
-
-/**
- * Single Strict False Predicate.
- *
- * Sprawdza (ściśle) czy $arg jest false. W wersji ścisłej wartość false ma wyłącznie bool false.
- * Funkcja pomocnicza dla sfalse.
- *
- * @param mixed $arg
- * @return bool
- */
-function single_sfalsep ($arg) { return
-        $arg === false ;}
 
 
 /**
@@ -30,8 +20,8 @@ function single_sfalsep ($arg) { return
  * @return bool
  */
 function sfalsep (...$args) { return
-        every (single_sfalsep,
-               ...$args) ;}
+                  every (base_sfalsep,
+                         ...$args) ;}
 
 
 /**
@@ -44,31 +34,7 @@ function sfalsep (...$args) { return
  * @return bool
  */
 function struep (...$args) { return
-        ! sfalsep (...$args) ;}
-
-
-/**
- * Single False Predicate.
- *
- * Sprawdza czy $arg jest false. W wersji zwykłej, wartość false mają:
- * - null
- * - bool false
- * - int 0
- * - float 0.0
- * - string ''
- * - array []
- * Funkcja pomocnicza dla falsep.
- *
- * @param mixed $arg
- * @return bool
- */
-function single_falsep ($arg) { return
-        single_sfalsep ($arg) ||
-        $arg === null ||
-        $arg === 0 ||
-        $arg === 0.0 ||
-        $arg === '' ||
-        $arg === [] || ;}
+                  ! sfalsep (...$args) ;}
 
 
 /**
@@ -86,8 +52,8 @@ function single_falsep ($arg) { return
  * @return bool
  */
 function falsep (...$args) { return
-        every (single_falsep,
-               ...$args) ;}
+                  every (base_falsep,
+                         ...$args) ;}
 
 
 /**
@@ -100,20 +66,7 @@ function falsep (...$args) { return
  * @return bool
  */
 function truep (...$args) { return
-        ! falsep (...$args) ;}
-
-
-/**
- * Single Strict Null Predicate.
- *
- * Sprawdza (ściśle) czy $arg jest null. W wersji ścisłej tylko i wyłącznie null jest null.
- * Funkcja pomocnicza dla snullp.
- *
- * @param mixed $arg
- * @return bool
- */
-function single_snullp ($arg) { return
-        $arg === null ;}
+                  ! falsep (...$args) ;}
 
 
 /**
@@ -126,27 +79,8 @@ function single_snullp ($arg) { return
  * @return bool
  */
 function snullp (...$args) { return
-        every (single_snullp,
-               ...$args) ;}
-
-
-/**
- * Single Null Predicate.
- *
- * Sprawdza czy $arg jest null. W wersji zwykłej null są:
- * - null
- * - bool false
- * - int 0
- * - float 0.0
- * - string ''
- * - array []
- * czyli wszystko to co jest też falsep. Funkcja pomocnicza dla nullp.
- *
- * @param mixed $arg
- * @return bool
- */
-function single_nullp ($arg) { return
-        single_falsep ($arg) ;}
+                  every (base_snullp,
+                         ...$args) ;}
 
 
 /**
@@ -165,7 +99,7 @@ function single_nullp ($arg) { return
  * @return bool
  */
 function nullp (...$args) { return
-        falsep (...$args) ;}
+                  falsep (...$args) ;}
 
 
 /**
@@ -175,8 +109,8 @@ function nullp (...$args) { return
  * @return bool
  */
 function sorp (...$args) { return
-        some (single_struep,
-              $args) ;}
+                  some (base_struep,
+                        $args) ;}
 
 
 /**
@@ -186,8 +120,8 @@ function sorp (...$args) { return
  * @return bool
  */
 function orp (...$args) { return
-        some (single_truep,
-              $args) ;}
+                  some (base_truep,
+                        $args) ;}
 
 
 /**
@@ -197,7 +131,7 @@ function orp (...$args) { return
  * @return bool
  */
 function sandp (...$args) { return
-        struep (...$args) ;}
+                  struep (...$args) ;}
 
 
 /**
@@ -207,7 +141,7 @@ function sandp (...$args) { return
  * @return bool
  */
 function andp (...$args) { return
-        truep (...$args) ;}
+                  truep (...$args) ;}
 
 
 /**
@@ -217,8 +151,8 @@ function andp (...$args) { return
  * @return bool
  */
 function sxorp (...$args) { return
-        sandp (sorp (...$args),
-               ! sandp (...$args)) ;}
+                  sandp (sorp (...$args),
+                         ! sandp (...$args)) ;}
 
 
 /**
@@ -228,33 +162,8 @@ function sxorp (...$args) { return
  * @return bool
  */
 function xorp (...$args) { return
-        andp (orp (...$args),
-              ! andp (...$args)) ;}
-
-
-/**
- * Single Strict Equal-To Predicate.
- *
- * @param mixed $a
- * @param mixed $b
- * @return bool
- */
-function single_sequalp ($a, $b) { return
-        $a === $b ;}
-
-
-/**
- * Test Every.
- *
- * @param callable $single_testp
- * @param mixed $args
- * @return bool
- */
-function test_every ($single_testp, ...$args) {
-    $last_arg = array_shift ($args) ;
-    $testp = function ($a) use ($single_testp, $last_arg) { return
-           $single_testp ($last_arg, $last_arg = $a) ;};
-    return every ($testp, ...$args) ;}
+                  andp (orp (...$args),
+                        ! andp (...$args)) ;}
 
 
 /**
@@ -264,19 +173,8 @@ function test_every ($single_testp, ...$args) {
  * @return bool
  */
 function sequalp (...$args) { return
-        test_every (single_sequalp,
-                    ...$args) ;}
-
-
-/**
- * Single Equal-To Predicate.
- *
- * @param mixed $a
- * @param mixed $b
- * @return bool
- */
-function single_equalp ($a, $b) { return
-        $a == $b ;}
+                  test_every (base_sequalp,
+                              ...$args) ;}
 
 
 /**
@@ -286,21 +184,8 @@ function single_equalp ($a, $b) { return
  * @return bool
  */
 function equalp (...$args) { return
-        test_every (single_equalp,
-                    ...$args) ;}
-
-
-/**
- * Single Strict Less-Than Predicate.
- *
- * @param mixed $a
- * @param mixed $b
- * @return bool
- */
-function single_slessp ($a, $b) { return
-        sandp (single_sequalp (gettype ($a),
-                               gettype ($b)),
-               $a < $b) ;}
+                  test_every (base_equalp,
+                              ...$args) ;}
 
 
 /**
@@ -310,21 +195,8 @@ function single_slessp ($a, $b) { return
  * @return bool
  */
 function slessp (...$args) { return
-        test_every (single_slessp,
-                    ...$args) ;}
-
-
-/**
- * Single Strict Greaten-Than Predicate.
- *
- * @param mixed $a
- * @param mixed $b
- * @return bool
- */
-function single_sgreaterp ($a, $b) { return
-        sandp (single_sequalp (gettype ($a),
-                               gettype ($b)),
-               $a > $b) ;}
+                  test_every (base_slessp,
+                              ...$args) ;}
 
 
 /**
@@ -334,5 +206,5 @@ function single_sgreaterp ($a, $b) { return
  * @param bool
  */
 function sgreaterp (...$args) { return
-        test_every (single_sgreaterp,
-                    ...$args) ;}
+                  test_every (base_sgreaterp,
+                              ...$args) ;}
