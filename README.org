@@ -5,17 +5,21 @@
 
 PhpLOgic - alteratywne podejście do logiki w PHP.
 
-* Instalacja
-- gdzieś w drzewie projektu sklonować repozytorium:
-#+BEGIN_EXAMPLE shell
-git clone http://github.com/rsm-lisper/plo
-#+END_EXAMPLE
-- przejść do katalogu =plo= i pobrać zależności:
-#+BEGIN_EXAMPLE shell
-cd plo
-git submodules sync && git submodules update
-#+END_EXAMPLE
-- uruchomić testy:
-#+BEGIN_EXAMPLE shell
-./test.sh
-#+END_EXAMPLE
+* Typy
+...czyli czym jest prawda i fałsz?
+** Strict
+W wersji "strict" fałszem (false) jest tylko i wyłącznie =false=. Prawdą (true) jest wszystko inne.
+** Loose
+W wersji "loose" fałszem (false) jest:
+- bool false
+- int 0
+- real 0.0
+- string ""
+- array []
+Prawdą (true) jest wszystko inne.
+* Operacje
+...czyli zastąpienie ==, === itp.
+** Strict
+W wersji "strict" równe oznacza ===, czyli typ i zawartość muszą być takie same.
+** Loose
+W wersji "loose" równe sobie są:

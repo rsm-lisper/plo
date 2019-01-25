@@ -2,12 +2,52 @@
 
 namespace plo ;
 
-require_once __DIR__. 'base.php' ;
+require_once __DIR__. 'base_types.php' ;
 require_once __DIR__. 'utils.php' ;
 
 require_once __DIR__. 'lib/pva/pva.php' ;
-
 use function pva\every, pva\some ;
+
+
+/**
+ * Strict False Predicate.
+ *
+ * Sprawdza (ściśle) czy każdy z argumentów $args jest false. W wersji ścisłej wartość
+ * false ma wyłącznie bool false.
+ *
+ * @param mixed $args
+ * @return bool
+ */
+function sfalsep (...$args) { return
+        every (base_sfalsep,
+               ...$args) ;}
+
+
+/**
+ * Strict True Predicate.
+ *
+ * Sprawdza (ściśle) czy każdy z argumentów $args jest true. W wersji ścisłej wartość  true ma
+ * wszystko poza bool false.
+ *
+ * @param mixed $args
+ * @return bool
+ */
+function struep (...$args) { return
+        ! sfalsep (...$args) ;}
+
+
+/**
+ * Strict Null Predicate.
+ *
+ * Sprawdza cza każdy z argumentów $args jest null. W wersji ścisłej tylko i wyłącznie null
+ * jest null.
+ *
+ * @param mixed $args
+ * @return bool
+ */
+function snullp (...$args) { return
+        every (base_snullp,
+               ...$args) ;}
 
 
 /**
@@ -59,46 +99,3 @@ function truep (...$args) { return
  */
 function nullp (...$args) { return
         falsep (...$args) ;}
-
-
-/**
- * Logical OR Predicate.
- *
- * @param mixed $args
- * @return bool
- */
-function orp (...$args) { return
-        some (base_truep,
-              $args) ;}
-
-
-/**
- * Logical AND Predicate.
- *
- * @param mixed $args
- * @return bool
- */
-function andp (...$args) { return
-        truep (...$args) ;}
-
-
-/**
- * Logical XOR Predicate.
- *
- * @param mixed $args
- * @return bool
- */
-function xorp (...$args) { return
-        andp (orp (...$args),
-              ! andp (...$args)) ;}
-
-
-/**
- * Equal-To Predicate.
- *
- * @param mixed $args
- * @return bool
- */
-function equalp (...$args) { return
-        test_every (base_equalp,
-                    ...$args) ;}
